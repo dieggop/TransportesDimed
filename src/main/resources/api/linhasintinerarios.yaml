@@ -1,0 +1,295 @@
+---
+swagger: "2.0"
+info:
+  description: >-
+    API para gestão e integração de linhas de ônibus e seus intinerários
+    Principais guides para definição da api são consultas a API PoaTransporte
+    Operações (Integração)
+    Listar as linhas de ônibus - http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o
+    Listar itinerário de uma determinada unidade de transporte - http://www.poatransporte.com.br/php/facades/process.php?a=il&p=5566
+
+  version: "1.0.0"
+  title: "TransportesDimed"
+  contact:
+    email: "dieggopsc@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "com.br.dieggocarrilho"
+basePath: "/"
+tags:
+- name: "cliente"
+  description: "Operações de Clientes"
+- name: "linhas"
+  description: "Operações para linhas de ônibus"
+  externalDocs:
+    description: "Saiba mais sobre a api acessando"
+    url: "http://www.datapoa.com.br/dataset/poatransporte/resource/bc69456c-1fff-4e6f-875b-c3e6d7163c3c"
+- name: "intinerario"
+  description: "Operações sobre Intinerarios"
+  externalDocs:
+    description: "Saiba mais sobre a api acessando"
+    url: "http://www.datapoa.com.br/dataset/poatransporte/resource/bc69456c-1fff-4e6f-875b-c3e6d7163c3c"
+schemes:
+- "http"
+paths:
+  /cliente:
+    post:
+      tags:
+      - "cliente"
+      summary: "Criação de Cliente"
+      description: "Esta operação fará o registro em base de dados de um cliente."
+      operationId: "createCliente"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created cliente object"
+        required: true
+        schema:
+          $ref: "#/definitions/Cliente"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/ClienteResponse'
+        400:
+          description: "erro durante o cadastro"
+    put:
+      tags:
+      - "cliente"
+      summary: "Atualização de dados de Cliente"
+      description: "Esta operação fará atualização cadastral de Cliente."
+      operationId: "updateCliente"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID é necessário para atualização de dados cadastrais"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Objeto do Cliente para atualização"
+        required: true
+        schema:
+          $ref: "#/definitions/Cliente"
+      responses:
+        400:
+          description: "Invalid cliente supplied"
+        404:
+          description: "Cliente not found"
+    delete:
+      tags:
+      - "cliente"
+      summary: "Deletar Cliente"
+      description: "Operação para exclusão de um Cliente"
+      operationId: "deleteCliente"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID é necessário para exclusão"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        400:
+          description: "Invalid clientename supplied"
+        404:
+          description: "Cliente not found"
+  /linhas/atualizar:
+    get:
+      tags:
+      - "linhas"
+      summary: "Integração com api para atualizar linhas de onibus"
+      description: "Esta atualizará a base de dados com linhas de onibus obtidos através de consulta a api externa"
+      operationId: "updateLinhas"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "operação realizada com sucesso"
+        404:
+          description: "ocorreu um erro durante a execução"
+  /linhas:
+    get:
+      tags:
+      - "linhas"
+      summary: "Filtrar linha de onibus"
+      description: "Busca linhas de ônibus por nome"
+      operationId: "filtrarLinhas"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "nome"
+        in: "query"
+        description: "Nome para filtro"
+        required: false
+        type: "string"
+      - name: page
+        in: query
+        description: >-
+          Pagina a ser recuperada, comecando de 1 e se omitida a primeira
+          pagina com 200 registros e retornada
+        required: false
+        type: integer
+        format: int32
+      - name: per_page
+        in: query
+        description: 'Quantidade de itens por pagina, no maximo 200'
+        required: false
+        type: integer
+        format: int32
+      responses:
+        200:
+          description: "operação realizada com sucesso"
+          schema:
+            $ref: "#/definitions/LinhasPaginado"
+        404:
+          description: "ocorreu um erro durante a execução"
+  /intinerarios/atualizar:
+    get:
+      tags:
+      - "intinerario"
+      summary: "Integração com api para atualização de intinerarios"
+      description: "Esta atualizará a base de dados com intinerarios obtidos através de consulta a api externa"
+      operationId: "updateIntinerarios"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "operação realizada com sucesso"
+        404:
+          description: "ocorreu um erro durante a execução"
+  /intinerarios:
+    get:
+      tags:
+      - "intinerario"
+      summary: "Obter Intinerário"
+      description: "Obter o itinerário de uma determinada unidade de transporte (UT)"
+      operationId: "filtrarIntinerarios"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "idUt"
+        in: "query"
+        description: "Código de Unidade de Transporte"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: page
+        in: query
+        description: >-
+          Pagina a ser recuperada, comecando de 1 e se omitida a primeira
+          pagina com 200 registros e retornada
+        required: false
+        type: integer
+        format: int32
+      - name: per_page
+        in: query
+        description: 'Quantidade de itens por pagina, no maximo 200'
+        required: false
+        type: integer
+        format: int32
+      responses:
+        200:
+          description: "operação realizada com sucesso"
+          schema:
+            $ref: '#/definitions/IntinerarioPaginado'
+        404:
+          description: "ocorreu um erro durante a execução"
+definitions:
+  Cliente:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      contato:
+        type: "string"
+      clienteStatus:
+        type: "integer"
+        format: "int32"
+        description: "Cliente Status"
+  ClienteResponse:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      contato:
+        type: "string"
+  Linhas:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      codigo:
+        type: "string"
+      nome:
+        type: "string"
+  LinhasPaginado:
+    type: "object"
+    properties:
+      page:
+        type: "integer"
+        format: "int64"
+      per_page:
+        type: "integer"
+        format: "int64"
+      linhas:
+        type: "array"
+        items:
+          $ref: '#/definitions/Linhas'
+  Intinerario:
+    type: "object"
+    properties:
+      idlinha:
+        type: "integer"
+        format: "int64"
+      lat:
+        type: "number"
+        format: "double"
+      lng:
+        type: "number"
+        format: "double"
+  IntinerarioPaginado:
+    type: "object"
+    properties:
+      page:
+        type: "integer"
+        format: "int64"
+      per_page:
+        type: "integer"
+        format: "int64"
+      intinerarios:
+        type: "array"
+        items:
+          $ref: '#/definitions/Intinerario'
+externalDocs:
+  description: "Swagger"
+  url: "http://swagger.io"
