@@ -33,7 +33,7 @@ tags:
 schemes:
 - "http"
 paths:
-  /cliente:
+  /cliente/sign-up:
     post:
       tags:
       - "cliente"
@@ -56,6 +56,7 @@ paths:
             $ref: '#/definitions/ClienteResponse'
         400:
           description: "erro durante o cadastro"
+  /cliente:
     put:
       tags:
       - "cliente"
@@ -212,9 +213,7 @@ definitions:
         format: "int64"
       username:
         type: "string"
-      firstName:
-        type: "string"
-      lastName:
+      name:
         type: "string"
       email:
         type: "string"
@@ -222,10 +221,6 @@ definitions:
         type: "string"
       contato:
         type: "string"
-      clienteStatus:
-        type: "integer"
-        format: "int32"
-        description: "Cliente Status"
   ClienteResponse:
     type: "object"
     properties:
@@ -234,9 +229,7 @@ definitions:
         format: "int64"
       username:
         type: "string"
-      firstName:
-        type: "string"
-      lastName:
+      name:
         type: "string"
       email:
         type: "string"
