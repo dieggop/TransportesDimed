@@ -33,8 +33,8 @@ public class UserController implements ClienteApi {
         com.br.dieggocarrilho.linhas.domain.Cliente retorno = null;
         try {
             retorno = clienteService.save(Mapear.clienteModelClienteDomain(user));
-        } catch(ExceptionNotFound | ExceptionConflict e) {
-            return new ResponseEntity(new Message(e.getMessage()) , HttpStatus.CONFLICT);
+        } catch (ExceptionNotFound | ExceptionConflict e) {
+            return new ResponseEntity(new Message(e.getMessage()), HttpStatus.CONFLICT);
         }
 
         ClienteResponse clienteResponse = Mapear.clienteDomainClienteResponseModel(retorno);
@@ -46,9 +46,8 @@ public class UserController implements ClienteApi {
 
         try {
             clienteService.desativarCliente();
-        } catch ( ExceptionConflict | ExceptionNotFound e )
-        {
-            return new ResponseEntity(new Message(e.getMessage()) , HttpStatus.CONFLICT);
+        } catch (ExceptionConflict | ExceptionNotFound e) {
+            return new ResponseEntity(new Message(e.getMessage()), HttpStatus.CONFLICT);
 
         }
 
@@ -56,17 +55,17 @@ public class UserController implements ClienteApi {
     }
 
     @Override
-    public ResponseEntity<ClienteResponse> updateCliente(@PathVariable("id") Long id, @Valid @RequestBody  Cliente body) {
+    public ResponseEntity<ClienteResponse> updateCliente(@PathVariable("id") Long id, @Valid @RequestBody Cliente body) {
         com.br.dieggocarrilho.linhas.domain.Cliente retorno = null;
         if (id != body.getId()) {
-            return new ResponseEntity(new Message("Erro de Payload") , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new Message("Erro de Payload"), HttpStatus.BAD_REQUEST);
         }
 
 
         try {
             retorno = clienteService.save(Mapear.clienteModelClienteDomain(body));
-        } catch(ExceptionNotFound | ExceptionConflict e) {
-            return new ResponseEntity(new Message(e.getMessage()) , HttpStatus.CONFLICT);
+        } catch (ExceptionNotFound | ExceptionConflict e) {
+            return new ResponseEntity(new Message(e.getMessage()), HttpStatus.CONFLICT);
         }
 
         ClienteResponse clienteResponse = Mapear.clienteDomainClienteResponseModel(retorno);
@@ -81,9 +80,8 @@ public class UserController implements ClienteApi {
 
             return new ResponseEntity<>(clienteResponse, HttpStatus.OK);
 
-        }catch (ExceptionNotFound e)
-        {
-            return new ResponseEntity(new Message(e.getMessage()) , HttpStatus.NOT_FOUND);
+        } catch (ExceptionNotFound e) {
+            return new ResponseEntity(new Message(e.getMessage()), HttpStatus.NOT_FOUND);
 
         }
     }
@@ -97,4 +95,4 @@ public class UserController implements ClienteApi {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }*/
- }
+}
