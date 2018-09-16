@@ -33,6 +33,24 @@ tags:
 schemes:
 - "http"
 paths:
+  /cliente:
+    get:
+      tags:
+      - "cliente"
+      summary: "Visualização dos dados do Cliente logado"
+      description: "Esta operação retorna os dados do cliente logado"
+      operationId: "recuperarCliente"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/ClienteResponse'
+        400:
+          description: "Invalid cliente supplied"
+        404:
+          description: "Cliente not found"
   /cliente/sign-up:
     post:
       tags:

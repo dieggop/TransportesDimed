@@ -5,6 +5,7 @@ import com.br.dieggocarrilho.linhas.exceptions.ExceptionConflict;
 import com.br.dieggocarrilho.linhas.exceptions.ExceptionNotFound;
 import com.br.dieggocarrilho.linhas.repository.ClienteRepository;
 import com.br.dieggocarrilho.linhas.service.ClienteService;
+import com.br.dieggocarrilho.linhas.transportesdimed.api.model.ClienteResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -73,5 +74,15 @@ public class ClienteServiceImpl implements ClienteService {
         SecurityContextHolder.getContext().setAuthentication(null);
 
 
+    }
+
+    @Override
+    public Cliente recuperarCliente() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Cliente retorno = clienteRepository.findByUsername(auth.getName());
+        if (retorno == null) {
+            throw new ExceptionNotFound("Este usuário não existe");
+        }
+        return retorno;
     }
 }

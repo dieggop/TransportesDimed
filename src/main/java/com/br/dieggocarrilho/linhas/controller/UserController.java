@@ -74,7 +74,21 @@ public class UserController implements ClienteApi {
         return new ResponseEntity<>(clienteResponse, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/verificar",
+    @Override
+    public ResponseEntity<ClienteResponse> recuperarCliente() {
+        try {
+            ClienteResponse clienteResponse = Mapear.clienteDomainClienteResponseModel(clienteService.recuperarCliente());
+
+            return new ResponseEntity<>(clienteResponse, HttpStatus.OK);
+
+        }catch (ExceptionNotFound e)
+        {
+            return new ResponseEntity(new Message(e.getMessage()) , HttpStatus.NOT_FOUND);
+
+        }
+    }
+
+    /*   @RequestMapping(value = "/verificar",
             produces = { "application/json" },
             method = RequestMethod.GET)
     public ResponseEntity<String> verificarAlgo() {
@@ -82,5 +96,5 @@ public class UserController implements ClienteApi {
         System.out.println(auth.getDetails());
         return new ResponseEntity<>(HttpStatus.OK);
 
-    }
+    }*/
  }
