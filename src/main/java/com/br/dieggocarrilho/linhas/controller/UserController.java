@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/clientes")
-public class UserController  {
+public class UserController implements ClienteApi {
 
     private ClienteService clienteService;
 
@@ -21,13 +21,14 @@ public class UserController  {
         this.clienteService = clienteService;
     }
 
-    @PostMapping("/sign-up")
-    public ResponseEntity<ClienteResponse> createCliente(@Valid Cliente user) {
+    @Override
+    public ResponseEntity<ClienteResponse> createCliente(@Valid @RequestBody Cliente user) {
         com.br.dieggocarrilho.linhas.domain.Cliente cliente = new com.br.dieggocarrilho.linhas.domain.Cliente();
         cliente.setEmail(user.getEmail());
         cliente.setName(user.getName());
         cliente.setPassword(user.getPassword());
         cliente.setUsername(user.getUsername());
+        System.out.println(user);
         com.br.dieggocarrilho.linhas.domain.Cliente retorno = clienteService.save(cliente);
 
         if (retorno == null) {
@@ -41,10 +42,21 @@ public class UserController  {
         return new ResponseEntity<ClienteResponse>(clienteResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/verificar")
-    @PermitAll
+    @Override
+    public ResponseEntity<Void> deleteCliente(Long id) {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Void> updateCliente(Long id, @Valid Cliente body) {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/verificar",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
     public ResponseEntity<String> verificarAlgo() {
-        return new ResponseEntity<>("Teste", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
  }

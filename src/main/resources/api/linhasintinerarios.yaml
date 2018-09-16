@@ -40,15 +40,17 @@ paths:
       summary: "Criação de Cliente"
       description: "Esta operação fará o registro em base de dados de um cliente."
       operationId: "createCliente"
+      consumes:
+      - "application/json"
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Created cliente object"
+      - in: body
+        name: body
+        description: Created cliente object
         required: true
         schema:
-          $ref: "#/definitions/Cliente"
+          $ref: '#/definitions/Cliente'
       responses:
         200:
           description: "successful operation"
@@ -63,6 +65,8 @@ paths:
       summary: "Atualização de dados de Cliente"
       description: "Esta operação fará atualização cadastral de Cliente."
       operationId: "updateCliente"
+      consumes:
+      - "application/json"
       produces:
       - "application/json"
       parameters:
