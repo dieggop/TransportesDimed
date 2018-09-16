@@ -6,13 +6,15 @@ import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Cliente;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.ClienteResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
-@RequestMapping("/clientes")
 public class UserController implements ClienteApi {
 
     private ClienteService clienteService;
@@ -56,6 +58,8 @@ public class UserController implements ClienteApi {
             produces = { "application/json" },
             method = RequestMethod.GET)
     public ResponseEntity<String> verificarAlgo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(auth.getDetails());
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
