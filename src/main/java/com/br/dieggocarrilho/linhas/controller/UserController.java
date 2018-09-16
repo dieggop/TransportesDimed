@@ -1,9 +1,14 @@
 package com.br.dieggocarrilho.linhas.controller;
 
+import com.br.dieggocarrilho.linhas.constantes.Mapear;
+import com.br.dieggocarrilho.linhas.exceptions.ExceptionConflict;
+import com.br.dieggocarrilho.linhas.exceptions.ExceptionNotFound;
+import com.br.dieggocarrilho.linhas.exceptions.Message;
 import com.br.dieggocarrilho.linhas.service.ClienteService;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.ClienteApi;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Cliente;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.ClienteResponse;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,33 +30,48 @@ public class UserController implements ClienteApi {
 
     @Override
     public ResponseEntity<ClienteResponse> createCliente(@Valid @RequestBody Cliente user) {
-        com.br.dieggocarrilho.linhas.domain.Cliente cliente = new com.br.dieggocarrilho.linhas.domain.Cliente();
-        cliente.setEmail(user.getEmail());
-        cliente.setName(user.getName());
-        cliente.setPassword(user.getPassword());
-        cliente.setUsername(user.getUsername());
-        System.out.println(user);
-        com.br.dieggocarrilho.linhas.domain.Cliente retorno = clienteService.save(cliente);
-
-        if (retorno == null) {
-            return new ResponseEntity<ClienteResponse>(HttpStatus.BAD_REQUEST);
+        com.br.dieggocarrilho.linhas.domain.Cliente retorno = null;
+        try {
+            retorno = clienteService.save(Mapear.clienteModelClienteDomain(user));
+        } catch(ExceptionNotFound | ExceptionConflict e) {
+            return new ResponseEntity(new Message(e.getMessage()) , HttpStatus.CONFLICT);
         }
-        ClienteResponse clienteResponse = new ClienteResponse();
-        clienteResponse.setEmail(retorno.getEmail());
-        clienteResponse.setId(retorno.getId());
-        clienteResponse.setUsername(retorno.getUsername());
-        clienteResponse.setName(retorno.getName());
-        return new ResponseEntity<ClienteResponse>(clienteResponse, HttpStatus.OK);
+
+        ClienteResponse clienteResponse = Mapear.clienteDomainClienteResponseModel(retorno);
+        return new ResponseEntity<>(clienteResponse, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> deleteCliente(Long id) {
+    public ResponseEntity<Void> deleteCliente() {
+
+        try {
+            clienteService.desativarCliente();
+        } catch ( ExceptionConflict | ExceptionNotFound e )
+        {
+            return new ResponseEntity(new Message(e.getMessage()) , HttpStatus.CONFLICT);
+
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> updateCliente(Long id, @Valid Cliente body) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<ClienteResponse> updateCliente(@PathVariable("id") Long id, @Valid @RequestBody  Cliente body) {
+        com.br.dieggocarrilho.linhas.domain.Cliente retorno = null;
+        if (id != body.getId()) {
+            return new ResponseEntity(new Message("Erro de Payload") , HttpStatus.BAD_REQUEST);
+        }
+
+
+        try {
+            retorno = clienteService.save(Mapear.clienteModelClienteDomain(body));
+        } catch(ExceptionNotFound | ExceptionConflict e) {
+            return new ResponseEntity(new Message(e.getMessage()) , HttpStatus.CONFLICT);
+        }
+
+        ClienteResponse clienteResponse = Mapear.clienteDomainClienteResponseModel(retorno);
+
+        return new ResponseEntity<>(clienteResponse, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/verificar",

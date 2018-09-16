@@ -7,4 +7,5 @@ public interface ClienteService {
     Cliente save(Cliente cliente);
 
 
+    void desativarCliente();
 }

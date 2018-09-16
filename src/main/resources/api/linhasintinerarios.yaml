@@ -58,7 +58,7 @@ paths:
             $ref: '#/definitions/ClienteResponse'
         400:
           description: "erro durante o cadastro"
-  /cliente:
+  /cliente/{id}:
     put:
       tags:
       - "cliente"
@@ -70,19 +70,23 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "id"
-        in: "path"
+      - name: id
+        in: path
         description: "ID é necessário para atualização de dados cadastrais"
         required: true
-        type: "integer"
-        format: "int64"
-      - in: "body"
-        name: "body"
+        type: integer
+        format: int64
+      - in: body
+        name: body
         description: "Objeto do Cliente para atualização"
         required: true
         schema:
           $ref: "#/definitions/Cliente"
       responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/ClienteResponse'
         400:
           description: "Invalid cliente supplied"
         404:
@@ -91,20 +95,13 @@ paths:
       tags:
       - "cliente"
       summary: "Deletar Cliente"
-      description: "Operação para exclusão de um Cliente"
+      description: "Operação para desativar cadastro de um Cliente"
       operationId: "deleteCliente"
       produces:
       - "application/json"
-      parameters:
-      - name: "id"
-        in: "path"
-        description: "ID é necessário para exclusão"
-        required: true
-        type: "integer"
-        format: "int64"
       responses:
         400:
-          description: "Invalid clientename supplied"
+          description: "Invalid supplied"
         404:
           description: "Cliente not found"
   /linhas/atualizar:
