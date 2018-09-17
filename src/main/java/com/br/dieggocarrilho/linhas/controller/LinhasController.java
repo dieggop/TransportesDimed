@@ -1,6 +1,9 @@
 package com.br.dieggocarrilho.linhas.controller;
 
+import com.br.dieggocarrilho.linhas.configuracao.PoaTransportes;
 import com.br.dieggocarrilho.linhas.domain.Linhas;
+import com.br.dieggocarrilho.linhas.exceptions.Message;
+import com.br.dieggocarrilho.linhas.service.LinhasService;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.LinhasApi;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.LinhasPaginado;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,6 +31,11 @@ import java.util.Map;
 @RestController
 public class LinhasController implements LinhasApi {
 
+    LinhasService linhasService;
+
+    public LinhasController(LinhasService linhasService) {
+        this.linhasService = linhasService;
+    }
 
     @Override
     public ResponseEntity<LinhasPaginado> filtrarLinhas(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "per_page", required = false) Integer perPage) {
@@ -35,17 +43,17 @@ public class LinhasController implements LinhasApi {
     }
 
     @Override
-    public ResponseEntity<Void> updateLinhas() {
-        RestTemplate restTemplate = new RestTemplate();
+    public ResponseEntity<LinhasPaginado> atualizarLinhas() {
+//        RestTemplate restTemplate = new RestTemplate();
+//
+//        ResponseEntity<String> result =
+//                restTemplate.getForEntity("http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o",
+//                        String.class );
+//
+//        Type listType = new TypeToken<ArrayList<Linhas>>(){}.getType();
+//        List<com.br.dieggocarrilho.linhas.domain.Linhas> linhas = new Gson().fromJson(result.getBody(), listType);
 
-        ResponseEntity<String> result =
-                restTemplate.getForEntity("http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o",
-                        String.class );
-
-        Type listType = new TypeToken<ArrayList<Linhas>>(){}.getType();
-        List<com.br.dieggocarrilho.linhas.domain.Linhas> linhas = new Gson().fromJson(result.getBody(), listType);
-
-
+        PoaTransportes.atualizarIntinerariosNoSistema();
 
         return new ResponseEntity<>(HttpStatus.OK);
 

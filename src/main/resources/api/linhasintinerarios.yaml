@@ -127,16 +127,19 @@ paths:
     get:
       tags:
       - linhas
-      summary: Integração com api para atualizar linhas de onibus
+      summary: >-
+        Integração com api para listar linhas de ônibus e atualizar base de dados, se necessário
       description: >-
-        Esta atualizará a base de dados com linhas de onibus obtidos através de
-        consulta a api externa
-      operationId: updateLinhas
+        Esta função atualizará a base de dados com linhas de onibus obtidos através de
+        consulta a api externa, caso haja diferença de informações
+      operationId: atualizarLinhas
       produces:
       - application/json
       responses:
         '200':
           description: operação realizada com sucesso
+          schema:
+            $ref: '#/definitions/LinhasPaginado'
         '404':
           description: ocorreu um erro durante a execução
   /linhas:
@@ -146,6 +149,8 @@ paths:
       summary: Filtrar linha de onibus
       description: Busca linhas de ônibus por nome
       operationId: filtrarLinhas
+      consumes:
+      - application/json
       produces:
       - application/json
       parameters:
@@ -154,6 +159,7 @@ paths:
         description: Nome para filtro
         required: false
         type: string
+
       - name: page
         in: query
         description: >-
