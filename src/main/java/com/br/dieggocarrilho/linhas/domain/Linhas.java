@@ -2,7 +2,9 @@ package com.br.dieggocarrilho.linhas.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Linhas implements Serializable {
@@ -14,6 +16,8 @@ public class Linhas implements Serializable {
     private String codigo;
     private String nome;
 
+    @ManyToMany(mappedBy = "linhas")
+    private List<Cliente> clientes;
     public Long getId() {
         return id;
     }
@@ -44,6 +48,14 @@ public class Linhas implements Serializable {
         this.nome = nome;
     }
     public Linhas() {
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 
     @Override

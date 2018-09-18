@@ -6,6 +6,7 @@ import com.br.dieggocarrilho.linhas.exceptions.Message;
 import com.br.dieggocarrilho.linhas.service.LinhasService;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.LinhasApi;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.LinhasPaginado;
+import com.br.dieggocarrilho.linhas.utils.MontagemPageRequest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -43,13 +44,13 @@ public class LinhasController implements LinhasApi {
     @Override
     public ResponseEntity<LinhasPaginado> filtrarLinhas(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "per_page", required = false) Integer perPage) {
 
-        PageRequest paginado = getPageRequest(page, perPage);
+        PageRequest paginado = MontagemPageRequest.getPageRequest(page, perPage);
 
         Page<Linhas> linhasPage = linhasService.findByFilter(nome, paginado);
 
         LinhasPaginado linhasPaginado = new LinhasPaginado();
-        linhasPaginado.setPage(page.longValue()+1);
-        linhasPaginado.setPerPage(perPage.longValue());
+        linhasPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber()+1));
+        linhasPaginado.setPerPage(Integer.toUnsignedLong(paginado.getPageSize()));
         linhasPaginado.total(linhasPage.getTotalElements());
         linhasPaginado.pages(new Long(linhasPage.getTotalPages()));
         linhasPaginado.setLinhas(linhasPage.stream().map(linhas -> {
@@ -62,17 +63,7 @@ public class LinhasController implements LinhasApi {
         return new ResponseEntity<>(linhasPaginado, HttpStatus.OK);
     }
 
-    private PageRequest getPageRequest(Integer page, Integer perPage) {
-        int lPage = 0;
-        int lPerPage = 20;
-        if (page != null && page > 0) {
-            lPage = page - 1;
-        }
-        if (perPage != null && perPage <= 20 && perPage > 0) {
-            lPerPage = perPage;
-        }
-        return PageRequest.of(lPage, lPerPage);
-    }
+
 
     @Override
     public ResponseEntity<Void> atualizarLinhas() {

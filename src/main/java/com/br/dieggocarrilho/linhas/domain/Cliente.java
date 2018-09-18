@@ -1,9 +1,7 @@
 package com.br.dieggocarrilho.linhas.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Cliente {
@@ -17,6 +15,9 @@ public class Cliente {
     private String name;
     private String contato;
     private Boolean status;
+
+    @ManyToMany
+    private List<Linhas> linhas;
 
     public Long getId() {
         return id;
@@ -74,6 +75,14 @@ public class Cliente {
         this.status = status;
     }
 
+    public List<Linhas> getLinhas() {
+        return linhas;
+    }
+
+    public void setLinhas(List<Linhas> linhas) {
+        this.linhas = linhas;
+    }
+
     @Override
     public String toString() {
         return "Cliente{" +
@@ -83,7 +92,8 @@ public class Cliente {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", contato='" + contato + '\'' +
-                ", status='" + status + '\'' +
+                ", status=" + status +
+                ", linhas=" + linhas +
                 '}';
     }
 }

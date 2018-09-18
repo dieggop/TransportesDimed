@@ -10,6 +10,7 @@ import com.br.dieggocarrilho.linhas.service.LinhasService;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.CoordenadasApi;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Intinerario;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.IntinerarioPaginado;
+import com.br.dieggocarrilho.linhas.utils.MontagemPageRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -46,13 +47,13 @@ public class CoordenadasController implements CoordenadasApi {
         System.out.println(byId.toString());
         PoaTransportes.baixarAtualizarIntinerariosDaLinhaNoSistema(byId.get().getId());
 
-        PageRequest paginado = getPageRequest(1,200);
+        PageRequest paginado = MontagemPageRequest.getPageRequest(1,200);
 
         Page<Coordenadas> coordenadas = intinerariosService.listarCoordenadasPaginado(byId.get().getId(), paginado);
 
         IntinerarioPaginado intinerarioPaginado = new IntinerarioPaginado();
-        intinerarioPaginado.setPage(1L);
-        intinerarioPaginado.setPerPage(200l);
+        intinerarioPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber()+1));
+        intinerarioPaginado.setPerPage(Integer.toUnsignedLong(paginado.getPageSize()));
         intinerarioPaginado.total(coordenadas.getTotalElements());
         intinerarioPaginado.pages(new Long(coordenadas.getTotalPages()));
         intinerarioPaginado.setIntinerarios(
@@ -67,15 +68,5 @@ public class CoordenadasController implements CoordenadasApi {
         return new ResponseEntity<IntinerarioPaginado>(intinerarioPaginado, HttpStatus.OK);
     }
 
-    private PageRequest getPageRequest(Integer page, Integer perPage) {
-        int lPage = 0;
-        int lPerPage = 20;
-        if (page != null && page > 0) {
-            lPage = page - 1;
-        }
-        if (perPage != null && perPage <= 20 && perPage > 0) {
-            lPerPage = perPage;
-        }
-        return PageRequest.of(lPage, lPerPage);
-    }
+
 }
