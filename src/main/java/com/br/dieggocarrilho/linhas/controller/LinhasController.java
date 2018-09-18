@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.gson.Gson;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.json.JSONObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 public class LinhasController implements LinhasApi {
@@ -39,21 +42,42 @@ public class LinhasController implements LinhasApi {
 
     @Override
     public ResponseEntity<LinhasPaginado> filtrarLinhas(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "per_page", required = false) Integer perPage) {
-        return null;
+
+        PageRequest paginado = getPageRequest(page, perPage);
+
+        Page<Linhas> linhasPage = linhasService.findByFilter(nome, paginado);
+
+        LinhasPaginado linhasPaginado = new LinhasPaginado();
+        linhasPaginado.setPage(page.longValue()+1);
+        linhasPaginado.setPerPage(perPage.longValue());
+        linhasPaginado.total(linhasPage.getTotalElements());
+        linhasPaginado.pages(new Long(linhasPage.getTotalPages()));
+        linhasPaginado.setLinhas(linhasPage.stream().map(linhas -> {
+            com.br.dieggocarrilho.linhas.transportesdimed.api.model.Linhas l = new com.br.dieggocarrilho.linhas.transportesdimed.api.model.Linhas();
+            l.setNome(linhas.getNome());
+            l.setId(linhas.getId());
+            l.setCodigo(linhas.getCodigo());
+            return l;
+        }).collect(Collectors.toList()));
+        return new ResponseEntity<>(linhasPaginado, HttpStatus.OK);
+    }
+
+    private PageRequest getPageRequest(Integer page, Integer perPage) {
+        int lPage = 0;
+        int lPerPage = 20;
+        if (page != null && page > 0) {
+            lPage = page - 1;
+        }
+        if (perPage != null && perPage <= 20 && perPage > 0) {
+            lPerPage = perPage;
+        }
+        return PageRequest.of(lPage, lPerPage);
     }
 
     @Override
-    public ResponseEntity<LinhasPaginado> atualizarLinhas() {
-//        RestTemplate restTemplate = new RestTemplate();
-//
-//        ResponseEntity<String> result =
-//                restTemplate.getForEntity("http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o",
-//                        String.class );
-//
-//        Type listType = new TypeToken<ArrayList<Linhas>>(){}.getType();
-//        List<com.br.dieggocarrilho.linhas.domain.Linhas> linhas = new Gson().fromJson(result.getBody(), listType);
+    public ResponseEntity<Void> atualizarLinhas() {
 
-        PoaTransportes.atualizarIntinerariosNoSistema();
+        PoaTransportes.atualizarLinhasNoSistema();
 
         return new ResponseEntity<>(HttpStatus.OK);
 

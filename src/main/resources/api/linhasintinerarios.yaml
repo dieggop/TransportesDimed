@@ -138,19 +138,15 @@ paths:
       responses:
         '200':
           description: operação realizada com sucesso
-          schema:
-            $ref: '#/definitions/LinhasPaginado'
         '404':
           description: ocorreu um erro durante a execução
-  /linhas:
+  /linhas/filtrar:
     get:
       tags:
       - linhas
       summary: Filtrar linha de onibus
       description: Busca linhas de ônibus por nome
       operationId: filtrarLinhas
-      consumes:
-      - application/json
       produces:
       - application/json
       parameters:
@@ -159,11 +155,9 @@ paths:
         description: Nome para filtro
         required: false
         type: string
-
       - name: page
         in: query
-        description: >-
-          Pagina a ser recuperada, comecando de 1 e se omitida a primeira
+        description: Pagina a ser recuperada, comecando de 1 e se omitida a primeira
           pagina com 200 registros e retornada
         required: false
         type: integer
@@ -181,20 +175,27 @@ paths:
             $ref: '#/definitions/LinhasPaginado'
         '404':
           description: ocorreu um erro durante a execução
-  /intinerarios/atualizar:
+  /coordenadas/baixar:
     get:
       tags:
       - intinerario
-      summary: Integração com api para atualização de intinerarios
-      description: >-
-        Esta atualizará a base de dados com intinerarios obtidos através de
-        consulta a api externa
-      operationId: updateIntinerarios
+      summary: Obter Intinerário da api externa
+      description: Obter o itinerário de uma determinada unidade de transporte (UT) atualizado
+      operationId: baixarIntinerarios
       produces:
       - application/json
+      parameters:
+      - name: idUt
+        in: query
+        description: Código de Unidade de Transporte
+        required: true
+        type: integer
+        format: int64
       responses:
         '200':
           description: operação realizada com sucesso
+          schema:
+            $ref: '#/definitions/IntinerarioPaginado'
         '404':
           description: ocorreu um erro durante a execução
   /intinerarios:
@@ -284,6 +285,12 @@ definitions:
       per_page:
         type: integer
         format: int64
+      pages:
+        type: integer
+        format: int64
+      total:
+        type: integer
+        format: int64
       linhas:
         type: array
         items:
@@ -307,6 +314,12 @@ definitions:
         type: integer
         format: int64
       per_page:
+        type: integer
+        format: int64
+      pages:
+        type: integer
+        format: int64
+      total:
         type: integer
         format: int64
       intinerarios:

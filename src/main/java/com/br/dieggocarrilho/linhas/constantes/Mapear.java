@@ -2,6 +2,7 @@ package com.br.dieggocarrilho.linhas.constantes;
 
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Cliente;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.ClienteResponse;
+import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Linhas;
 
 public class Mapear {
 
@@ -26,5 +27,14 @@ public class Mapear {
         clienteResponse.setContato(domain.getContato());
 
         return clienteResponse;
+    }
+
+    public static Linhas linhaDomainLinhaModel(com.br.dieggocarrilho.linhas.domain.Linhas linhasDomain) {
+        Linhas linhas = new Linhas();
+        linhas.setCodigo(linhasDomain.getCodigo());
+        linhas.setId(linhasDomain.getId());
+        linhas.setNome(linhasDomain.getNome());
+
+        return linhas;
     }
 }

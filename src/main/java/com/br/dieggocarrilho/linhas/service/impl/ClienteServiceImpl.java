@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import static com.br.dieggocarrilho.linhas.constantes.SecurityConstants.HEADER_S
 import static com.br.dieggocarrilho.linhas.constantes.SecurityConstants.TOKEN_PREFIX;
 
 @Service
+@Transactional
 public class ClienteServiceImpl implements ClienteService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private ClienteRepository clienteRepository;

@@ -8,16 +8,13 @@ import com.br.dieggocarrilho.linhas.service.ClienteService;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.ClienteApi;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Cliente;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.ClienteResponse;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
-import java.security.Principal;
 
 @RestController
 public class UserController implements ClienteApi {

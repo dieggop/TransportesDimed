@@ -1,8 +1,8 @@
 package com.br.dieggocarrilho.linhas.configuracao;
 
 import com.br.dieggocarrilho.linhas.domain.Coordenadas;
-import com.br.dieggocarrilho.linhas.domain.Intinerario;
 import com.br.dieggocarrilho.linhas.domain.Linhas;
+import com.br.dieggocarrilho.linhas.exceptions.ExceptionBadRequest;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
@@ -12,9 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Named;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Named
 public class PoaTransportes {
@@ -81,50 +79,64 @@ public class PoaTransportes {
         }
 
         logger.info("Atualizados " + linhasAtualizarSistema.size());
-        poaTransportesService.saveAll(linhasAtualizarSistema);
+        if (!linhasAtualizarSistema.isEmpty())
+        {
+            List<Linhas> retornoSalvo = poaTransportesService.saveAll(linhasAtualizarSistema);
+            if (retornoSalvo.isEmpty())  throw new ExceptionBadRequest("Não foi possível atualizar as linhas");
+            atualizarIntinerariosNoSistema(retornoSalvo);
+        }
+
+
     }
 
-    public static void atualizarIntinerariosNoSistema() {
+    public static void atualizarIntinerariosNoSistema(List<Linhas> retornoSalvo) {
         logger.info("Atualizando Intinerarios no sistema");
+
+        List<Linhas> linhasNoSistema =retornoSalvo;
+
+        linhasNoSistema.forEach(linhas -> {
+           baixarAtualizarIntinerariosDaLinhaNoSistema(linhas.getId());
+
+        });
+
+    }
+
+    public static void baixarAtualizarIntinerariosDaLinhaNoSistema(Long id) {
+        List<Coordenadas> coordenadasDasLinhas = new ArrayList<>();
+
         RestTemplate restTemplate = new RestTemplate();
 
         String url = "http://www.poatransporte.com.br/php/facades/process.php?a=il&p=";
 
-        List<Linhas> linhasNoSistema = poaTransportesService.findAll();
-
-        linhasNoSistema.get(0).getId();
-
         ResponseEntity<String> result =
-                restTemplate.getForEntity(url + linhasNoSistema.get(0).getId(),
+                restTemplate.getForEntity(url + id,
                         String.class );
-        System.out.println(result.getBody());
 
+        Type type = new TypeToken<Map<Object, Object>>(){}.getType();
+        Map<String, String> myMap = new Gson().fromJson(result.getBody(), type);
+        for(Map.Entry<String, String> key:  myMap.entrySet()){
+            try {
+                Integer.valueOf(key.getKey());
+                Object value = key.getValue();
+                Coordenadas co = new Gson().fromJson(value.toString(), Coordenadas.class);
+                co.setIdLinha(id);
+                coordenadasDasLinhas.add(co);
+            } catch (Exception e) {
+//					e.printStackTrace();
+                logger.warn("Encontrado chaves que não são coordenadas");
+            }
+        }
 
-        Type listType = new TypeToken<ArrayList<Coordenadas>>(){}.getType();
-
-        List<Coordenadas> array = new Gson().fromJson(result.getBody(), listType);
-
-        System.out.println(array);
-
-
-//        return lst;
-//
-//            Object intinerarios = new Gson().fromJson(result.getBody(), Intinerario.class);
-//        System.out.println(intinerarios);
-
-
-/*        linhasNoSistema.forEach(linhas -> {
-            ResponseEntity<String> result =
-                    restTemplate.getForEntity(url + linhas.getId(),
-                            String.class );
-            System.out.println(result.getBody());
-//            Type listType = new TypeToken<ArrayList<Intinerario>>(){}.getType();
-//            List<Intinerario> intinerarios = new Gson().fromJson(result.getBody(), listType);
-//            System.out.println(intinerarios.toString());
-        });*/
+        logger.info("Removendo intinerários desta linha");
+        poaTransportesService.deleteAllFromIdLinha(id);
+        logger.info("Atualizando Intinerarios desta linha no sistema");
+        poaTransportesService.saveAllCoordenadas(coordenadasDasLinhas);
 
 
     }
+
+
+
 
 
 }
