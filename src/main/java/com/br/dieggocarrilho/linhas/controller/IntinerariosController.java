@@ -1,6 +1,7 @@
 package com.br.dieggocarrilho.linhas.controller;
 
 import com.br.dieggocarrilho.linhas.configuracao.PoaTransportes;
+import com.br.dieggocarrilho.linhas.constantes.Mapear;
 import com.br.dieggocarrilho.linhas.domain.Coordenadas;
 import com.br.dieggocarrilho.linhas.domain.Linhas;
 import com.br.dieggocarrilho.linhas.exceptions.Message;
@@ -42,7 +43,7 @@ public class IntinerariosController implements CoordenadasApi {
 
         Page<Coordenadas> coordenadas = intinerariosService.listarCoordenadasPaginado(byId.get().getId(), paginado);
 
-        IntinerarioPaginado intinerarioPaginado = getIntinerarioPaginado(paginado, coordenadas);
+        IntinerarioPaginado intinerarioPaginado = Mapear.coordenadasDomainIntinerarioPaginadoModel(paginado, coordenadas);
 
         return new ResponseEntity<IntinerarioPaginado>(intinerarioPaginado, HttpStatus.OK);
     }
@@ -63,26 +64,10 @@ public class IntinerariosController implements CoordenadasApi {
 
         Page<Coordenadas> coordenadas = intinerariosService.listarCoordenadasPaginado(byId.get().getId(), paginado);
 
-        IntinerarioPaginado intinerarioPaginado = getIntinerarioPaginado(paginado, coordenadas);
+        IntinerarioPaginado intinerarioPaginado = Mapear.coordenadasDomainIntinerarioPaginadoModel(paginado, coordenadas);
 
         return new ResponseEntity<IntinerarioPaginado>(intinerarioPaginado, HttpStatus.OK);
     }
 
 
-    private IntinerarioPaginado getIntinerarioPaginado(PageRequest paginado, Page<Coordenadas> coordenadas) {
-        IntinerarioPaginado intinerarioPaginado = new IntinerarioPaginado();
-        intinerarioPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber() + 1));
-        intinerarioPaginado.setPerPage(Integer.toUnsignedLong(paginado.getPageSize()));
-        intinerarioPaginado.total(coordenadas.getTotalElements());
-        intinerarioPaginado.pages(new Long(coordenadas.getTotalPages()));
-        intinerarioPaginado.setIntinerarios(
-                coordenadas.getContent().stream().map(coordenadas1 -> {
-                    Intinerario i = new Intinerario();
-                    i.setIdlinha(coordenadas1.getIdLinha());
-                    i.setLat(coordenadas1.getLat());
-                    i.setLng(coordenadas1.getLng());
-                    return i;
-                }).collect(Collectors.toList()));
-        return intinerarioPaginado;
-    }
 }

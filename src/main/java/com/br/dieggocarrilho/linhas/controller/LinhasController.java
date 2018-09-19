@@ -1,6 +1,7 @@
 package com.br.dieggocarrilho.linhas.controller;
 
 import com.br.dieggocarrilho.linhas.configuracao.PoaTransportes;
+import com.br.dieggocarrilho.linhas.constantes.Mapear;
 import com.br.dieggocarrilho.linhas.domain.Coordenadas;
 import com.br.dieggocarrilho.linhas.domain.Linhas;
 import com.br.dieggocarrilho.linhas.service.IntinerariosService;
@@ -51,20 +52,10 @@ public class LinhasController implements LinhasApi {
             System.out.println("Buscar por raio, latitude e longitude");
             linhasPage = linhasService.findByRaioLatLng(raio, lat, lng, paginado);
         }
-        LinhasPaginado linhasPaginado = new LinhasPaginado();
-        linhasPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber()+1));
-        linhasPaginado.setPerPage(Integer.toUnsignedLong(paginado.getPageSize()));
-        linhasPaginado.total(linhasPage.getTotalElements());
-        linhasPaginado.pages(new Long(linhasPage.getTotalPages()));
-        linhasPaginado.setLinhas(linhasPage.stream().map(linhas -> {
-            com.br.dieggocarrilho.linhas.transportesdimed.api.model.Linhas l = new com.br.dieggocarrilho.linhas.transportesdimed.api.model.Linhas();
-            l.setNome(linhas.getNome());
-            l.setId(linhas.getId());
-            l.setCodigo(linhas.getCodigo());
-            return l;
-        }).collect(Collectors.toList()));
+        LinhasPaginado linhasPaginado = Mapear.linhasDomainLinhasPaginadoModel(paginado, linhasPage);
         return new ResponseEntity<>(linhasPaginado, HttpStatus.OK);
     }
+
 
 
 
@@ -88,19 +79,7 @@ public class LinhasController implements LinhasApi {
 
         Page<Coordenadas> coordenadas = intinerariosService.listarCoordenadasPorRaioPaginado(idUt, raio, lat, lng, paginado);
 
-        IntinerarioPaginado intinerarioPaginado = new IntinerarioPaginado();
-        intinerarioPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber() + 1));
-        intinerarioPaginado.setPerPage(Integer.toUnsignedLong(paginado.getPageSize()));
-        intinerarioPaginado.total(coordenadas.getTotalElements());
-        intinerarioPaginado.pages(new Long(coordenadas.getTotalPages()));
-        intinerarioPaginado.setIntinerarios(
-                coordenadas.getContent().stream().map(coordenadas1 -> {
-                    Intinerario i = new Intinerario();
-                    i.setIdlinha(coordenadas1.getIdLinha());
-                    i.setLat(coordenadas1.getLat());
-                    i.setLng(coordenadas1.getLng());
-                    return i;
-                }).collect(Collectors.toList()));
+        IntinerarioPaginado intinerarioPaginado = Mapear.coordenadasDomainIntinerarioPaginadoModel(paginado, coordenadas);
 
         return new ResponseEntity<>(intinerarioPaginado, HttpStatus.OK);
 
