@@ -208,7 +208,7 @@ paths:
         '200':
           description: operação realizada com sucesso
         '404':
-          description: ocorreu um erro durante a execução
+          description: coordenadas não encontradas
   /linhas/filtrar:
     get:
       tags:
@@ -261,7 +261,7 @@ paths:
           schema:
             $ref: '#/definitions/LinhasPaginado'
         '404':
-          description: ocorreu um erro durante a execução
+          description: Linha não encontrada
   /linhas/{idUt}/itinerarios:
     get:
       tags:
@@ -314,7 +314,7 @@ paths:
           schema:
             $ref: '#/definitions/ItinerarioPaginado'
         '404':
-          description: ocorreu um erro durante a execução
+          description: Coordenadas não encontradas
   /coordenadas/baixar:
     get:
       tags:
@@ -337,7 +337,7 @@ paths:
           schema:
             $ref: '#/definitions/ItinerarioPaginado'
         '404':
-          description: ocorreu um erro durante a execução
+          description: Coordenadas não encontradas
   /coordenadas/listar:
     get:
       tags:
@@ -374,7 +374,7 @@ paths:
           schema:
             $ref: '#/definitions/ItinerarioPaginado'
         '404':
-          description: ocorreu um erro durante a execução
+          description: Coordenadas não encontradas
 definitions:
   Cliente:
     type: object
