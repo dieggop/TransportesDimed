@@ -76,10 +76,10 @@ Obtendo sucesso no login, será retornado no header do response um token de auth
 Para cada requisição deve ser encaminhado o Token como header.
 
 Com estas informações, o sistema tem o seguinte comportamento:
-> Obter um Token
-> Fazer um request enviando o Token
-> Validar o token
-> Retornar o resultado da requisição
+>  * Obter um Token
+> * Fazer um request enviando o Token
+> * Validar o token
+> * Retornar o resultado da requisição
 
 Isto acontece pois o contexto de serviços é diferente das aplicações convencionais, onde temos a duração do mesmo para apenas uma requisição. A requisição acontece, você autentica seu usuário, retorna o resultado (200, 404, 401) e essa requisição terminou.
 Estamos trabalhando com o Bearer pois ele trafega um token e não um usuário/senha no header. A cada requisição devemos enviar o Token, sendo assim, uma requisição a um endpoint ficaria neste formato:
