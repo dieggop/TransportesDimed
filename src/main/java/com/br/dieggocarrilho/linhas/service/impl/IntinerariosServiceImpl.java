@@ -27,6 +27,6 @@ public class IntinerariosServiceImpl implements IntinerariosService {
 
     @Override
     public Page<Coordenadas> listarCoordenadasPaginado(Long id, PageRequest pageable) {
-        return coordenadasRepository.findAll(pageable);
+        return coordenadasRepository.findByIdLinha(id, pageable);
     }
 }

@@ -16,8 +16,8 @@ public class Cliente {
     private String contato;
     private Boolean status;
 
-    @ManyToMany
-    private List<Linhas> linhas;
+    @OneToMany(mappedBy = "cliente")
+    private List<ClienteLinha> clienteLinhas;
 
     public Long getId() {
         return id;
@@ -75,12 +75,12 @@ public class Cliente {
         this.status = status;
     }
 
-    public List<Linhas> getLinhas() {
-        return linhas;
+    public List<ClienteLinha> getClienteLinhas() {
+        return clienteLinhas;
     }
 
-    public void setLinhas(List<Linhas> linhas) {
-        this.linhas = linhas;
+    public void setClienteLinhas(List<ClienteLinha> clienteLinhas) {
+        this.clienteLinhas = clienteLinhas;
     }
 
     @Override
@@ -93,7 +93,6 @@ public class Cliente {
                 ", name='" + name + '\'' +
                 ", contato='" + contato + '\'' +
                 ", status=" + status +
-                ", linhas=" + linhas +
                 '}';
     }
 }

@@ -3,6 +3,7 @@ package com.br.dieggocarrilho.linhas.domain;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public class Linhas implements Serializable {
     private String codigo;
     private String nome;
 
-    @ManyToMany(mappedBy = "linhas")
-    private List<Cliente> clientes;
+    @OneToMany(mappedBy = "linhas")
+    private List<ClienteLinha> clientesLinhas;
     public Long getId() {
         return id;
     }
@@ -50,12 +51,12 @@ public class Linhas implements Serializable {
     public Linhas() {
     }
 
-    public List<Cliente> getClientes() {
-        return clientes;
+    public List<ClienteLinha> getClientesLinhas() {
+        return clientesLinhas;
     }
 
-    public void setClientes(List<Cliente> clientes) {
-        this.clientes = clientes;
+    public void setClientesLinhas(List<ClienteLinha> clientesLinhas) {
+        this.clientesLinhas = clientesLinhas;
     }
 
     @Override

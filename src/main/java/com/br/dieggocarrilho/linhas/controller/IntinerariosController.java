@@ -45,22 +45,11 @@ public class IntinerariosController implements CoordenadasApi {
 
         Page<Coordenadas> coordenadas = intinerariosService.listarCoordenadasPaginado(byId.get().getId(), paginado);
 
-        IntinerarioPaginado intinerarioPaginado = new IntinerarioPaginado();
-        intinerarioPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber()+1));
-        intinerarioPaginado.setPerPage(Integer.toUnsignedLong(paginado.getPageSize()));
-        intinerarioPaginado.total(coordenadas.getTotalElements());
-        intinerarioPaginado.pages(new Long(coordenadas.getTotalPages()));
-        intinerarioPaginado.setIntinerarios(
-                coordenadas.getContent().stream().map(coordenadas1 -> {
-                    Intinerario i = new Intinerario();
-                    i.setIdlinha(coordenadas1.getIdLinha());
-                    i.setLat(coordenadas1.getLat());
-                    i.setLng(coordenadas1.getLng());
-                    return i;
-                }).collect(Collectors.toList()));
+        IntinerarioPaginado intinerarioPaginado = getIntinerarioPaginado(paginado, coordenadas);
 
         return new ResponseEntity<IntinerarioPaginado>(intinerarioPaginado, HttpStatus.OK);
     }
+
 
     @Override
     public ResponseEntity<IntinerarioPaginado> baixarIntinerarios(@NotNull Long idUt) {
@@ -77,8 +66,15 @@ public class IntinerariosController implements CoordenadasApi {
 
         Page<Coordenadas> coordenadas = intinerariosService.listarCoordenadasPaginado(byId.get().getId(), paginado);
 
+        IntinerarioPaginado intinerarioPaginado = getIntinerarioPaginado(paginado, coordenadas);
+
+        return new ResponseEntity<IntinerarioPaginado>(intinerarioPaginado, HttpStatus.OK);
+    }
+
+
+    private IntinerarioPaginado getIntinerarioPaginado(PageRequest paginado, Page<Coordenadas> coordenadas) {
         IntinerarioPaginado intinerarioPaginado = new IntinerarioPaginado();
-        intinerarioPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber()+1));
+        intinerarioPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber() + 1));
         intinerarioPaginado.setPerPage(Integer.toUnsignedLong(paginado.getPageSize()));
         intinerarioPaginado.total(coordenadas.getTotalElements());
         intinerarioPaginado.pages(new Long(coordenadas.getTotalPages()));
@@ -90,7 +86,6 @@ public class IntinerariosController implements CoordenadasApi {
                     i.setLng(coordenadas1.getLng());
                     return i;
                 }).collect(Collectors.toList()));
-
-        return new ResponseEntity<IntinerarioPaginado>(intinerarioPaginado, HttpStatus.OK);
+        return intinerarioPaginado;
     }
 }

@@ -123,6 +123,80 @@ paths:
           description: Invalid cliente supplied
         '404':
           description: Cliente not found
+  /cliente/linhas/listar:
+    get:
+      tags:
+      - cliente
+      summary: Captura de Linhas de Onibus do Cliente
+      description: Esta operação lista as linhas de onibus que o cliente cadastrou
+      operationId: clienteLinhas
+      produces:
+      - application/json
+      parameters:
+      - name: page
+        in: query
+        description: Pagina a ser recuperada, comecando de 1 e se omitida a primeira
+          pagina com 200 registros e retornada
+        required: false
+        type: integer
+        format: int32
+      - name: per_page
+        in: query
+        description: 'Quantidade de itens por pagina, no maximo 200'
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/LinhasPaginado'
+  '/cliente/linhas/cadastrar':
+    post:
+      tags:
+      - cliente
+      summary: Cadastro de linhas do Cliente
+      description: Esta operação faz o cadastro das linhas de onibus do cliente
+      operationId: clienteLinhasCadastrar
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Objeto da linha para cadastro
+        required: true
+        schema:
+          $ref: '#/definitions/Linhas'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid cliente supplied
+        '404':
+          description: Cliente not found
+  '/cliente/linhas/{idUt}/remover':
+    delete:
+      tags:
+      - cliente
+      summary: Deletar Linha do Cliente
+      description: Operação para remover cadastro de uma linha do Cliente
+      operationId: clienteLinhasRemover
+      produces:
+      - application/json
+      parameters:
+      - name: idUt
+        in: path
+        description: ID é necessário para buscar a linha e fazer registro de dados
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '400':
+          description: Invalid supplied
+        '404':
+          description: Cliente not found
   /linhas/atualizar:
     get:
       tags:
