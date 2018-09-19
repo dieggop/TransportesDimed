@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,6 +33,7 @@ public class UserController implements ClienteApi {
     private ClienteService clienteService;
     private LinhasService linhasService;
 
+    @Inject
     public UserController(ClienteService clienteService,LinhasService linhasService) {
         this.clienteService = clienteService;
         this.linhasService = linhasService;

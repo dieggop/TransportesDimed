@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.inject.Inject;
 import java.util.List;
 
 @Service
@@ -15,6 +16,7 @@ public class IntinerariosServiceImpl implements IntinerariosService {
     private LinhasRepository linhasRepository;
     private CoordenadasRepository coordenadasRepository;
 
+    @Inject
     public IntinerariosServiceImpl(LinhasRepository linhasRepository, CoordenadasRepository coordenadasRepository) {
         this.linhasRepository = linhasRepository;
         this.coordenadasRepository = coordenadasRepository;

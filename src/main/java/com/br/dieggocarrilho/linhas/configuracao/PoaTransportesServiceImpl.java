@@ -18,6 +18,7 @@ public class PoaTransportesServiceImpl  implements  PoaTransportesService{
     private LinhasRepository linhasRepository;
     private CoordenadasRepository coordenadasRepository;
 
+    @Inject
     public PoaTransportesServiceImpl(LinhasRepository linhasRepository, CoordenadasRepository coordenadasRepository) {
         this.linhasRepository = linhasRepository;
         this.coordenadasRepository = coordenadasRepository;

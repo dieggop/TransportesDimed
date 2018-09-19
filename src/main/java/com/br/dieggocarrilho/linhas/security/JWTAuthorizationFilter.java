@@ -29,7 +29,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private UserDetailsServiceImpl userDetailsService;
 
-
+    @Inject
     public JWTAuthorizationFilter(AuthenticationManager authManager, UserDetailsServiceImpl userDetailsService) {
         super(authManager);
         this.userDetailsService = userDetailsService;

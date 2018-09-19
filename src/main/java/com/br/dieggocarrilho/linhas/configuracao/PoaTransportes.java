@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -21,6 +22,7 @@ public class PoaTransportes {
 
     public static PoaTransportesService poaTransportesService;
 
+    @Inject
     public PoaTransportes(PoaTransportesService poaTransportesService) {
         this.poaTransportesService = poaTransportesService;
     }

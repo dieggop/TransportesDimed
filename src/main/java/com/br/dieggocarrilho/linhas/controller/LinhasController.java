@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.stream.Collectors;
 
@@ -30,6 +31,7 @@ public class LinhasController implements LinhasApi {
     LinhasService linhasService;
     IntinerariosService intinerariosService;
 
+    @Inject
     public LinhasController(LinhasService linhasService, IntinerariosService intinerariosService) {
         this.linhasService = linhasService;
         this.intinerariosService = intinerariosService;

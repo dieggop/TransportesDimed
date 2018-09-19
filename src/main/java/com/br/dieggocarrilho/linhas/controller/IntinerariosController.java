@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ public class IntinerariosController implements CoordenadasApi {
     LinhasService linhasService;
     IntinerariosService intinerariosService;
 
+    @Inject
     public IntinerariosController(LinhasService linhasService, IntinerariosService intinerariosService) {
         this.intinerariosService = intinerariosService;
         this.linhasService = linhasService;
