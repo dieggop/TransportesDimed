@@ -41,4 +41,9 @@ public class LinhasServiceImpl implements LinhasService {
 
         return retorno;
     }
+
+    @Override
+    public Page<Linhas> findAll(PageRequest paginado) {
+        return linhasRepository.findAll(paginado);
+    }
 }

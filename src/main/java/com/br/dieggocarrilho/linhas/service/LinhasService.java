@@ -14,4 +14,6 @@ public interface LinhasService {
     Page<Linhas> findByFilter(String nome, PageRequest paginado);
 
     Page<Linhas> findByRaioLatLng(Integer raio, Double lat, Double lng, PageRequest paginado);
+
+    Page<Linhas> findAll(PageRequest paginado);
 }

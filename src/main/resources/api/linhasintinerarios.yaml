@@ -192,7 +192,7 @@ paths:
           description: Invalid supplied
         '404':
           description: Cliente not found
-  /linhas/atualizar:
+  /linhas/baixar:
     get:
       tags:
       - linhas
@@ -214,7 +214,7 @@ paths:
       tags:
       - linhas
       summary: Filtrar linha de onibus
-      description: Esta operação possibilita o filtro de unidades de transporte por nome ou por um filtro que recebe uma latitude, longitude e raio, e retorna quais unidades de transporte se encontraram nessa faixa
+      description: Esta operação possibilita o filtro de unidades de transporte por nome ou por um filtro que recebe uma latitude, longitude e raio, e retorna quais unidades de transporte se encontraram nessa faixa. Caso nenhum filtro seja enviado, é retornado uma lista de todas as unidades de transporte
       operationId: filtrarLinhas
       produces:
       - application/json

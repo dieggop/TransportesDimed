@@ -53,6 +53,8 @@ public class LinhasController implements LinhasApi {
         } else if (raio != null && lat != null && lng != null) {
             System.out.println("Buscar por raio, latitude e longitude");
             linhasPage = linhasService.findByRaioLatLng(raio, lat, lng, paginado);
+        } else {
+            linhasPage = linhasService.findAll(paginado);
         }
         LinhasPaginado linhasPaginado = Mapear.linhasDomainLinhasPaginadoModel(paginado, linhasPage);
         return new ResponseEntity<>(linhasPaginado, HttpStatus.OK);
