@@ -13,7 +13,6 @@ import com.br.dieggocarrilho.linhas.transportesdimed.api.model.ClienteResponse;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Linhas;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.LinhasPaginado;
 import com.br.dieggocarrilho.linhas.utils.MontagemPageRequest;
-import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;

@@ -219,7 +219,7 @@ paths:
       tags:
       - linhas
       summary: Filtrar linha de onibus
-      description: Busca linhas de ônibus por nome
+      description: Esta operação possibilita o filtro de unidades de transporte por nome ou por um filtro que recebe uma latitude, longitude e raio, e retorna quais unidades de transporte se encontraram nessa faixa
       operationId: filtrarLinhas
       produces:
       - application/json
@@ -229,6 +229,24 @@ paths:
         description: Nome para filtro
         required: false
         type: string
+      - name: raio
+        in: query
+        description: Raio para filtro
+        required: false
+        type: integer
+        format: int32
+      - name: lat
+        in: query
+        description: latitude para filtro
+        required: false
+        type: number
+        format: double
+      - name: lng
+        in: query
+        description: longitude para filtro
+        required: false
+        type: number
+        format: double
       - name: page
         in: query
         description: Pagina a ser recuperada, comecando de 1 e se omitida a primeira
@@ -247,6 +265,59 @@ paths:
           description: operação realizada com sucesso
           schema:
             $ref: '#/definitions/LinhasPaginado'
+        '404':
+          description: ocorreu um erro durante a execução
+  /linhas/{idUt}/intinerarios:
+    get:
+      tags:
+      - linhas
+      summary: Filtrar intinerarios de uma unidade de transporte
+      description: Esta operação faz o filtro de raio de uma determinada unidade de transporte trazendo somente as latitudes que se encaixam nessa busca.
+      operationId: filtrarIntinerarios
+      produces:
+      - application/json
+      parameters:
+      - name: idUt
+        in: path
+        required: true
+        type: integer
+        format: int64
+      - name: raio
+        in: query
+        description: Raio para filtro
+        required: true
+        type: integer
+        format: int32
+      - name: lat
+        in: query
+        description: latitude para filtro
+        required: true
+        type: number
+        format: double
+      - name: lng
+        in: query
+        description: longitude para filtro
+        required: true
+        type: number
+        format: double
+      - name: page
+        in: query
+        description: Pagina a ser recuperada, comecando de 1 e se omitida a primeira
+          pagina com 200 registros e retornada
+        required: false
+        type: integer
+        format: int32
+      - name: per_page
+        in: query
+        description: 'Quantidade de itens por pagina, no maximo 200'
+        required: false
+        type: integer
+        format: int32
+      responses:
+        '200':
+          description: operação realizada com sucesso
+          schema:
+            $ref: '#/definitions/IntinerarioPaginado'
         '404':
           description: ocorreu um erro durante a execução
   /coordenadas/baixar:

@@ -2,34 +2,20 @@ package com.br.dieggocarrilho.linhas.controller;
 
 import com.br.dieggocarrilho.linhas.configuracao.PoaTransportes;
 import com.br.dieggocarrilho.linhas.domain.Linhas;
-import com.br.dieggocarrilho.linhas.exceptions.Message;
 import com.br.dieggocarrilho.linhas.service.LinhasService;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.LinhasApi;
+import com.br.dieggocarrilho.linhas.transportesdimed.api.model.IntinerarioPaginado;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.LinhasPaginado;
 import com.br.dieggocarrilho.linhas.utils.MontagemPageRequest;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.gson.Gson;
-import jdk.nashorn.internal.parser.JSONParser;
-import org.json.JSONObject;
+import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
-import java.lang.reflect.Type;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.validation.constraints.NotNull;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,7 +28,12 @@ public class LinhasController implements LinhasApi {
     }
 
     @Override
-    public ResponseEntity<LinhasPaginado> filtrarLinhas(@RequestParam(value = "nome", required = false) String nome, @RequestParam(value = "page", required = false) Integer page, @RequestParam(value = "per_page", required = false) Integer perPage) {
+    public ResponseEntity<LinhasPaginado> filtrarLinhas(@RequestParam(value = "nome", required = false) String nome,
+                                                        @RequestParam(value = "raio", required = false) Integer raio,
+                                                        @RequestParam(value = "lat", required = false) Double lat,
+                                                        @RequestParam(value = "lng", required = false) Double lng,
+                                                        @RequestParam(value = "page", required = false) Integer page,
+                                                        @RequestParam(value = "per_page", required = false) Integer perPage) {
 
         PageRequest paginado = MontagemPageRequest.getPageRequest(page, perPage);
 
@@ -73,4 +64,12 @@ public class LinhasController implements LinhasApi {
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+
+    @Override
+    public ResponseEntity<IntinerarioPaginado> filtrarIntinerarios(Long idUt, @NotNull Integer raio, @NotNull Double lat, @NotNull Double lng, Integer page, Integer perPage) {
+        return null;
+    }
+
+
+
 }
