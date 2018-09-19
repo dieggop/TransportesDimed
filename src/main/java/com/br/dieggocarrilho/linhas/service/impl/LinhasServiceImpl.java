@@ -31,4 +31,12 @@ public class LinhasServiceImpl implements LinhasService {
 
         return retorno;
     }
+
+    @Override
+    public Page<Linhas> findByRaioLatLng(Integer raio, Double lat, Double lng, PageRequest paginado) {
+        System.out.println("Buscar por raio, latitude e longitude - service");
+        Page<Linhas> retorno = linhasRepository.findByRaioLatLng( raio,  lat,  lng,  paginado);
+
+        return retorno;
+    }
 }

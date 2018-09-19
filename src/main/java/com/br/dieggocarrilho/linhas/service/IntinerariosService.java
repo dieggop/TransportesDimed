@@ -11,4 +11,5 @@ public interface IntinerariosService {
     List<Coordenadas> listarCoordenadas(Long id);
     Page<Coordenadas> listarCoordenadasPaginado(Long id, PageRequest pageable);
 
+    Page<Coordenadas> listarCoordenadasPorRaioPaginado(Long idUt, Integer raio, Double lat, Double lng, PageRequest paginado);
 }

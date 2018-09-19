@@ -29,4 +29,9 @@ public class IntinerariosServiceImpl implements IntinerariosService {
     public Page<Coordenadas> listarCoordenadasPaginado(Long id, PageRequest pageable) {
         return coordenadasRepository.findByIdLinha(id, pageable);
     }
+
+    @Override
+    public Page<Coordenadas> listarCoordenadasPorRaioPaginado(Long idUt, Integer raio, Double lat, Double lng, PageRequest paginado) {
+        return coordenadasRepository.findByUtRaioLatLng(idUt, raio, lat, lng, paginado);
+    }
 }
