@@ -69,7 +69,7 @@ public class LinhasController implements LinhasApi {
     }
 
     @Override
-    public ResponseEntity<IntinerarioPaginado> filtrarIntinerarios(@PathVariable(value = "idUt", required = true) Long idUt,
+    public ResponseEntity<IntinerarioPaginado> filtrarIntinerariosCliente(@PathVariable(value = "idUt", required = true) Long idUt,
                                                                    @RequestParam(value = "raio", required = true) Integer raio,
                                                                    @RequestParam(value = "lat", required = true) Double lat,
                                                                    @RequestParam(value = "lng", required = true) Double lng,

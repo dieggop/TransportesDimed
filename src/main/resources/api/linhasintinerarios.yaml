@@ -273,7 +273,7 @@ paths:
       - linhas
       summary: Filtrar intinerarios de uma unidade de transporte
       description: Esta operação faz o filtro de raio de uma determinada unidade de transporte trazendo somente as latitudes que se encaixam nessa busca.
-      operationId: filtrarIntinerarios
+      operationId: filtrarIntinerariosCliente
       produces:
       - application/json
       parameters:
