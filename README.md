@@ -32,7 +32,7 @@ Sistema criado em Spring Boot, utilizando das seguintes tecnologias:
 As Dependências são instaladas utilizando o gerenciador MAVEN
 
 ## Combos
-Todos os lists so enviados ao front-end com o formato paginado.
+Todos os lists so enviados ao front-end com o formato páginado.
 
 ### Utilizando
 
@@ -119,8 +119,8 @@ Para desativar o cadastro do cliente, deve fazer requisição HTTP do tipo DELET
 
 Para listar as linhas de ônibus cadastradas a requisição deve ser para: localhost:8080/linhas/filtrar
 Como parâmetros tipo query é possível enviar: 
-* page -> Pagina a ser recuperada, comecando de 1 e se omitida a primeira pagina com 200 registros é retornada
-* per_page -> Quantidade de itens por pagina, no maximo 200
+* page -> Página a ser recuperada, comecando de 1 e se omitida a primeira página com 200 registros é retornada
+* per_page -> Quantidade de itens por página, no máximo 200
 Exemplo de retorno:
 ```
 {
@@ -147,8 +147,8 @@ Para listar o itinerário de uma UT deve ser enviada uma requisição para: loca
 
 Como parâmetros tipo query é possível enviar: 
 * idUT ->  identificação de uma unidade de transporte
-* page -> Pagina a ser recuperada, comecando de 1 e se omitida a primeira pagina com 200 registros é retornada
-* per_page -> Quantidade de itens por pagina, no maximo 200
+* page -> Página a ser recuperada, comecando de 1 e se omitida a primeira página com 200 registros é retornada
+* per_page -> Quantidade de itens por página, no máximo 200
 
 Exemplo: localhost:8080/coordenadas/listar?idUt=5021page=1&per_page=50
 * Exemplo de retorno:
@@ -158,7 +158,7 @@ Exemplo: localhost:8080/coordenadas/listar?idUt=5021page=1&per_page=50
     "per_page": 200,
     "pages": 2,
     "total": 377,
-    "intinerarios": [
+    "itinerarios": [
         {
             "idlinha": 5021,
             "lat": -30.027321287659,
@@ -172,8 +172,8 @@ Exemplo: localhost:8080/coordenadas/listar?idUt=5021page=1&per_page=50
 Para listar as linhas de ônibus do cliente deve acessar: http://localhost:8080/cliente/linhas/listar?page=1&per_page=10
 
 Como parâmetros tipo query é possível enviar: 
-* page -> Pagina a ser recuperada, comecando de 1 e se omitida a primeira pagina com 200 registros é retornada
-* per_page -> Quantidade de itens por pagina, no maximo 200
+* page -> Página a ser recuperada, comecando de 1 e se omitida a primeira página com 200 registros é retornada
+* per_page -> Quantidade de itens por página, no máximo 200
 
 
 ### Cadastrando Unidade de Transporte do cliente
@@ -194,8 +194,8 @@ Para descadastrar uma UT do cliente basta enviar uma requisição DELETE para a 
 Para listar as UTs cadastradas basta acessar a rota: localhost:8080/cliente/linhas/listar?per_page=10&page=1
 
 Como parâmetros tipo query é possível enviar: 
-* page -> Pagina a ser recuperada, comecando de 1 e se omitida a primeira pagina com 200 registros é retornada
-* per_page -> Quantidade de itens por pagina, no maximo 200
+* page -> Página a ser recuperada, comecando de 1 e se omitida a primeira página com 200 registros é retornada
+* per_page -> Quantidade de itens por página, no máximo 200
 
 Retorno:
 ```
