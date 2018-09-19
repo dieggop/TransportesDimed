@@ -11,6 +11,25 @@ Aplicação baseada no spring boot usando spring data jpa e hibernate, seguindo 
 
 Utiliza injeção de componentes (@INJECT) o que torna o código de serviços compatível com qualquer servidor Java EE, apenas a implementação da API é dependente do spring boot.
 
+## Banco de dados
+
+create database linhasonibus
+
+### Application.Properties
+
+No arquivo Application.Properties deve ser colocado o login e senha para acesso ao banco de dados, por parte do sistema.
+Também o url de acesso
+
+```
+spring.datasource.url= jdbc:mysql://localhost:3306/linhasonibus
+spring.datasource.username= root
+spring.datasource.password=
+```
+
+## Maven
+
+Na pasta do projeto, digite: mvn clean install, para instalação das dependências e criação das classes de interface e modelos
+
 ## Levantando serviço via Eclipse
 Executar a classe com.br.dieggocarrilho.linhas.LinhasApplication
 
@@ -226,4 +245,5 @@ Uma requisição deve ser enviada para localhost:8080/coordenadas/baixar?idUt={i
 * onde idUT é um ID de uma Unidade de Transporte
 
 O retorno é um Status Header 200 caso tenha dado certo ou 409 caso tenha dado errado
+
 
