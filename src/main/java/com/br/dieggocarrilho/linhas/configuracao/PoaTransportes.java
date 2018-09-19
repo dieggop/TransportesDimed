@@ -3,7 +3,7 @@ package com.br.dieggocarrilho.linhas.configuracao;
 import com.br.dieggocarrilho.linhas.domain.Coordenadas;
 import com.br.dieggocarrilho.linhas.domain.Linhas;
 import com.br.dieggocarrilho.linhas.exceptions.ExceptionBadRequest;
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,10 @@ import org.springframework.web.client.RestTemplate;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Named
 public class PoaTransportes {

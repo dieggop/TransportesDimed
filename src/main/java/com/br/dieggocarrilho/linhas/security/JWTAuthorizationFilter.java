@@ -2,10 +2,7 @@ package com.br.dieggocarrilho.linhas.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.br.dieggocarrilho.linhas.domain.Cliente;
-import com.br.dieggocarrilho.linhas.repository.ClienteRepository;
 import com.br.dieggocarrilho.linhas.service.impl.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,13 +14,10 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.br.dieggocarrilho.linhas.constantes.SecurityConstants.HEADER_STRING;
-import static com.br.dieggocarrilho.linhas.constantes.SecurityConstants.SECRET;
-import static com.br.dieggocarrilho.linhas.constantes.SecurityConstants.TOKEN_PREFIX;
+import static com.br.dieggocarrilho.linhas.constantes.SecurityConstants.*;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 

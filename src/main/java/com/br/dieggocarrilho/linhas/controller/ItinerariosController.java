@@ -8,7 +8,6 @@ import com.br.dieggocarrilho.linhas.exceptions.Message;
 import com.br.dieggocarrilho.linhas.service.ItinerariosService;
 import com.br.dieggocarrilho.linhas.service.LinhasService;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.CoordenadasApi;
-import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Itinerario;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.ItinerarioPaginado;
 import com.br.dieggocarrilho.linhas.utils.MontagemPageRequest;
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 public class ItinerariosController implements CoordenadasApi {

@@ -7,11 +7,9 @@ import com.br.dieggocarrilho.linhas.domain.Linhas;
 import com.br.dieggocarrilho.linhas.service.ItinerariosService;
 import com.br.dieggocarrilho.linhas.service.LinhasService;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.LinhasApi;
-import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Itinerario;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.ItinerarioPaginado;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.LinhasPaginado;
 import com.br.dieggocarrilho.linhas.utils.MontagemPageRequest;
-import io.swagger.annotations.ApiParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -22,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
-import javax.validation.constraints.NotNull;
-import java.util.stream.Collectors;
 
 @RestController
 public class LinhasController implements LinhasApi {

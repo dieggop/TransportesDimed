@@ -2,10 +2,6 @@ package com.br.dieggocarrilho.linhas.security;
 
 import com.auth0.jwt.JWT;
 import com.br.dieggocarrilho.linhas.domain.Cliente;
-import io.jsonwebtoken.Jwt;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,7 +9,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 
 import javax.inject.Inject;
 import javax.servlet.FilterChain;
