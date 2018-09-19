@@ -1,12 +1,7 @@
 swagger: '2.0'
 info:
   description: >-
-    API para gestão e integração de linhas de ônibus e seus intinerários
-    Principais guides para definição da api são consultas a API PoaTransporte
-    Operações (Integração) Listar as linhas de ônibus -
-    http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o Listar
-    itinerário de uma determinada unidade de transporte -
-    http://www.poatransporte.com.br/php/facades/process.php?a=il&p=5566
+    API para gestão e integração de linhas de ônibus e seus itinerários. As principais guides para definição da api são consultas a API PoaTransporte Operações (Integração) Listar as linhas de ônibus - http://www.poatransporte.com.br/php/facades/process.php?a=nc&p=%&t=o Listar itinerário de uma determinada unidade de transporte - http://www.poatransporte.com.br/php/facades/process.php?a=il&p=5566
   version: 1.0.0
   title: TransportesDimed
   contact:
@@ -25,8 +20,8 @@ tags:
     description: Saiba mais sobre a api acessando
     url: >-
       http://www.datapoa.com.br/dataset/poatransporte/resource/bc69456c-1fff-4e6f-875b-c3e6d7163c3c
-- name: intinerario
-  description: Operações sobre Intinerarios
+- name: itinerario
+  description: Operações sobre Itinerarios
   externalDocs:
     description: Saiba mais sobre a api acessando
     url: >-
@@ -267,13 +262,13 @@ paths:
             $ref: '#/definitions/LinhasPaginado'
         '404':
           description: ocorreu um erro durante a execução
-  /linhas/{idUt}/intinerarios:
+  /linhas/{idUt}/itinerarios:
     get:
       tags:
       - linhas
-      summary: Filtrar intinerarios de uma unidade de transporte
+      summary: Filtrar itinerarios de uma unidade de transporte
       description: Esta operação faz o filtro de raio de uma determinada unidade de transporte trazendo somente as latitudes que se encaixam nessa busca.
-      operationId: filtrarIntinerariosCliente
+      operationId: filtrarItinerariosCliente
       produces:
       - application/json
       parameters:
@@ -317,16 +312,16 @@ paths:
         '200':
           description: operação realizada com sucesso
           schema:
-            $ref: '#/definitions/IntinerarioPaginado'
+            $ref: '#/definitions/ItinerarioPaginado'
         '404':
           description: ocorreu um erro durante a execução
   /coordenadas/baixar:
     get:
       tags:
-      - intinerario
+      - itinerario
       summary: Obter Intinerário da api externa
       description: Obter o itinerário de uma determinada unidade de transporte (UT) atualizado
-      operationId: baixarIntinerarios
+      operationId: baixarItinerarios
       produces:
       - application/json
       parameters:
@@ -340,16 +335,16 @@ paths:
         '200':
           description: operação realizada com sucesso
           schema:
-            $ref: '#/definitions/IntinerarioPaginado'
+            $ref: '#/definitions/ItinerarioPaginado'
         '404':
           description: ocorreu um erro durante a execução
   /coordenadas/listar:
     get:
       tags:
-      - intinerario
+      - itinerario
       summary: Obter Intinerário
       description: Obter o itinerário de uma determinada unidade de transporte (UT)
-      operationId: filtrarIntinerarios
+      operationId: filtrarItinerarios
       produces:
       - application/json
       parameters:
@@ -377,7 +372,7 @@ paths:
         '200':
           description: operação realizada com sucesso
           schema:
-            $ref: '#/definitions/IntinerarioPaginado'
+            $ref: '#/definitions/ItinerarioPaginado'
         '404':
           description: ocorreu um erro durante a execução
 definitions:
@@ -440,7 +435,7 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Linhas'
-  Intinerario:
+  Itinerario:
     type: object
     properties:
       idlinha:
@@ -452,7 +447,7 @@ definitions:
       lng:
         type: number
         format: double
-  IntinerarioPaginado:
+  ItinerarioPaginado:
     type: object
     properties:
       page:
@@ -467,10 +462,10 @@ definitions:
       total:
         type: integer
         format: int64
-      intinerarios:
+      itinerarios:
         type: array
         items:
-          $ref: '#/definitions/Intinerario'
+          $ref: '#/definitions/Itinerario'
 externalDocs:
   description: Swagger
   url: 'http://swagger.io'

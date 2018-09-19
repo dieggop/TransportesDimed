@@ -85,25 +85,25 @@ public class PoaTransportes {
         {
             List<Linhas> retornoSalvo = poaTransportesService.saveAll(linhasAtualizarSistema);
             if (retornoSalvo.isEmpty())  throw new ExceptionBadRequest("Não foi possível atualizar as linhas");
-            atualizarIntinerariosNoSistema(retornoSalvo);
+            atualizarItinerariosNoSistema(retornoSalvo);
         }
 
 
     }
 
-    public static void atualizarIntinerariosNoSistema(List<Linhas> retornoSalvo) {
-        logger.info("Atualizando Intinerarios no sistema");
+    public static void atualizarItinerariosNoSistema(List<Linhas> retornoSalvo) {
+        logger.info("Atualizando Itinerarios no sistema");
 
         List<Linhas> linhasNoSistema =retornoSalvo;
 
         linhasNoSistema.forEach(linhas -> {
-           baixarAtualizarIntinerariosDaLinhaNoSistema(linhas.getId());
+           baixarAtualizarItinerariosDaLinhaNoSistema(linhas.getId());
 
         });
 
     }
 
-    public static void baixarAtualizarIntinerariosDaLinhaNoSistema(Long id) {
+    public static void baixarAtualizarItinerariosDaLinhaNoSistema(Long id) {
         List<Coordenadas> coordenadasDasLinhas = new ArrayList<>();
 
         RestTemplate restTemplate = new RestTemplate();
@@ -131,7 +131,7 @@ public class PoaTransportes {
 
         logger.info("Removendo intinerários desta linha");
         poaTransportesService.deleteAllFromIdLinha(id);
-        logger.info("Atualizando Intinerarios desta linha no sistema");
+        logger.info("Atualizando Itinerarios desta linha no sistema");
         poaTransportesService.saveAllCoordenadas(coordenadasDasLinhas);
 
 

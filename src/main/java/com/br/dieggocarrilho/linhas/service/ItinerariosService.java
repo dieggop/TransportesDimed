@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
-public interface IntinerariosService {
+public interface ItinerariosService {
 
     List<Coordenadas> listarCoordenadas(Long id);
     Page<Coordenadas> listarCoordenadasPaginado(Long id, PageRequest pageable);

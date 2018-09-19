@@ -74,20 +74,20 @@ public class Mapear {
         return linhasPaginado;
     }
 
-    public static IntinerarioPaginado coordenadasDomainIntinerarioPaginadoModel(PageRequest paginado, Page<Coordenadas> coordenadas) {
-        IntinerarioPaginado intinerarioPaginado = new IntinerarioPaginado();
-        intinerarioPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber() + 1));
-        intinerarioPaginado.setPerPage(Integer.toUnsignedLong(paginado.getPageSize()));
-        intinerarioPaginado.total(coordenadas.getTotalElements());
-        intinerarioPaginado.pages(new Long(coordenadas.getTotalPages()));
-        intinerarioPaginado.setIntinerarios(
+    public static ItinerarioPaginado coordenadasDomainItinerarioPaginadoModel(PageRequest paginado, Page<Coordenadas> coordenadas) {
+        ItinerarioPaginado itinerarioPaginado = new ItinerarioPaginado();
+        itinerarioPaginado.setPage(Integer.toUnsignedLong(paginado.getPageNumber() + 1));
+        itinerarioPaginado.setPerPage(Integer.toUnsignedLong(paginado.getPageSize()));
+        itinerarioPaginado.total(coordenadas.getTotalElements());
+        itinerarioPaginado.pages(new Long(coordenadas.getTotalPages()));
+        itinerarioPaginado.setItinerarios(
                 coordenadas.getContent().stream().map(coordenadas1 -> {
-                    Intinerario i = new Intinerario();
+                    Itinerario i = new Itinerario();
                     i.setIdlinha(coordenadas1.getIdLinha());
                     i.setLat(coordenadas1.getLat());
                     i.setLng(coordenadas1.getLng());
                     return i;
                 }).collect(Collectors.toList()));
-        return intinerarioPaginado;
+        return itinerarioPaginado;
     }
 }

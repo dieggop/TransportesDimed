@@ -4,11 +4,11 @@ import com.br.dieggocarrilho.linhas.configuracao.PoaTransportes;
 import com.br.dieggocarrilho.linhas.constantes.Mapear;
 import com.br.dieggocarrilho.linhas.domain.Coordenadas;
 import com.br.dieggocarrilho.linhas.domain.Linhas;
-import com.br.dieggocarrilho.linhas.service.IntinerariosService;
+import com.br.dieggocarrilho.linhas.service.ItinerariosService;
 import com.br.dieggocarrilho.linhas.service.LinhasService;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.LinhasApi;
-import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Intinerario;
-import com.br.dieggocarrilho.linhas.transportesdimed.api.model.IntinerarioPaginado;
+import com.br.dieggocarrilho.linhas.transportesdimed.api.model.Itinerario;
+import com.br.dieggocarrilho.linhas.transportesdimed.api.model.ItinerarioPaginado;
 import com.br.dieggocarrilho.linhas.transportesdimed.api.model.LinhasPaginado;
 import com.br.dieggocarrilho.linhas.utils.MontagemPageRequest;
 import io.swagger.annotations.ApiParam;
@@ -29,12 +29,12 @@ import java.util.stream.Collectors;
 public class LinhasController implements LinhasApi {
 
     LinhasService linhasService;
-    IntinerariosService intinerariosService;
+    ItinerariosService itinerariosService;
 
     @Inject
-    public LinhasController(LinhasService linhasService, IntinerariosService intinerariosService) {
+    public LinhasController(LinhasService linhasService, ItinerariosService itinerariosService) {
         this.linhasService = linhasService;
-        this.intinerariosService = intinerariosService;
+        this.itinerariosService = itinerariosService;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class LinhasController implements LinhasApi {
     }
 
     @Override
-    public ResponseEntity<IntinerarioPaginado> filtrarIntinerariosCliente(@PathVariable(value = "idUt", required = true) Long idUt,
+    public ResponseEntity<ItinerarioPaginado> filtrarItinerariosCliente(@PathVariable(value = "idUt", required = true) Long idUt,
                                                                    @RequestParam(value = "raio", required = true) Integer raio,
                                                                    @RequestParam(value = "lat", required = true) Double lat,
                                                                    @RequestParam(value = "lng", required = true) Double lng,
@@ -79,11 +79,11 @@ public class LinhasController implements LinhasApi {
                                                                    @RequestParam(value = "per_page", required = false) Integer perPage) {
         PageRequest paginado = MontagemPageRequest.getPageRequest(page,perPage);
 
-        Page<Coordenadas> coordenadas = intinerariosService.listarCoordenadasPorRaioPaginado(idUt, raio, lat, lng, paginado);
+        Page<Coordenadas> coordenadas = itinerariosService.listarCoordenadasPorRaioPaginado(idUt, raio, lat, lng, paginado);
 
-        IntinerarioPaginado intinerarioPaginado = Mapear.coordenadasDomainIntinerarioPaginadoModel(paginado, coordenadas);
+        ItinerarioPaginado itinerarioPaginado = Mapear.coordenadasDomainItinerarioPaginadoModel(paginado, coordenadas);
 
-        return new ResponseEntity<>(intinerarioPaginado, HttpStatus.OK);
+        return new ResponseEntity<>(itinerarioPaginado, HttpStatus.OK);
 
     }
 
