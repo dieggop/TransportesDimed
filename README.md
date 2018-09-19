@@ -15,6 +15,17 @@ Utiliza injeção de componentes (@INJECT) o que torna o código de serviços co
 
 create database linhasonibus
 
+### Application.Properties
+
+No arquivo Application.Properties deve ser colocado o login e senha para acesso ao banco de dados, por parte do sistema.
+Também o url de acesso
+
+```
+spring.datasource.url= jdbc:mysql://localhost:3306/linhasonibus
+spring.datasource.username= root
+spring.datasource.password=
+```
+
 ## Maven
 
 Na pasta do projeto, digite: mvn clean install, para instalação das dependências e criação das classes de interface e modelos
