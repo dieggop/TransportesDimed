@@ -17,7 +17,7 @@ create database linhasonibus
 
 ## Maven
 
-Na pasta do projeto, digite: mvn clean install, para instalação das dependências e criaço das classes de interface
+Na pasta do projeto, digite: mvn clean install, para instalação das dependências e criação das classes de interface e modelos
 
 ## Levantando serviço via Eclipse
 Executar a classe com.br.dieggocarrilho.linhas.LinhasApplication
