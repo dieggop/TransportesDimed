@@ -215,10 +215,12 @@ Retorno:
 ### ATUALIZANDO O SISTEMA
 #### Unidades de Transportes
 Uma requisição deve ser enviada para localhost:8080/linhas/baixar
+
 O retorno é um Status Header 200 caso tenha dado certo ou 409 caso tenha dado errado
 
 #### Itinerários de uma Unidade de Transporte
 Uma requisição deve ser enviada para localhost:8080/coordenadas/baixar?idUt={idUt}
+
 * onde idUT é um ID de uma Unidade de Transporte
 
 O retorno é um Status Header 200 caso tenha dado certo ou 409 caso tenha dado errado
