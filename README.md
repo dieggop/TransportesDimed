@@ -11,6 +11,14 @@ Aplicação baseada no spring boot usando spring data jpa e hibernate, seguindo 
 
 Utiliza injeção de componentes (@INJECT) o que torna o código de serviços compatível com qualquer servidor Java EE, apenas a implementação da API é dependente do spring boot.
 
+## Banco de dados
+
+create database linhasonibus
+
+## Maven
+
+Na pasta do projeto, digite: mvn clean install, para instalação das dependências e criaço das classes de interface
+
 ## Levantando serviço via Eclipse
 Executar a classe com.br.dieggocarrilho.linhas.LinhasApplication
 
