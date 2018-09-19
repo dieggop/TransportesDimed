@@ -198,7 +198,7 @@ paths:
             $ref: '#/definitions/IntinerarioPaginado'
         '404':
           description: ocorreu um erro durante a execução
-  /intinerarios:
+  /coordenadas/listar:
     get:
       tags:
       - intinerario
